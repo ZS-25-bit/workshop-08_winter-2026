@@ -305,11 +305,13 @@ Create a clean, publication ready figure depicting predictions for the best mode
 
 ### Methods
 
-We used linear models to determine the predictive relationship between specific leaf area (cm^2^/g), treatment, and species on plant mass (g). We evaluated model assumptions of normally distributed errors using QQ plots of model residuals. We evaluated assumptions of constant variance of errors using Residuals vs Fitted and Scale-Location plots. We used Akaike's Information Criterion (AIC) to select the simplest model that explained the most variation in plant mass.  
+
+
+
 
 ### Results
 
-We found that the simplest model describing the greatest variation in plant mass included treatment and species as predictors (linear model: F(2, 67) = 14.57, p < 0.001, $\alpha$ = 0.05). 
+
 
 
 
