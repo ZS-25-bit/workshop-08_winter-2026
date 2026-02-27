@@ -10,6 +10,7 @@ execute:
   message: false # use this to make sure messages don't show up
   warning: false # use this to make sure warnings don't show upl
 ---
+[deployed html url](https://zs-25-bit.github.io/workshop-08_winter-2026/code/workshop-code.html)
 
 In this workshop, we will answer the question: How do specific leaf area, water treatment, and species influence plant mass?  
 
@@ -151,6 +152,19 @@ Make a scatterplot to visualize SLA (the predictor) on the x-axis, and total mas
 Label the axes with units where appropriate.  
 
 Add a title describing the relationship (e.g. as SLA increases, total mass ______). 
+```{r}
+#| label: Sla & plant mass plot
+ggplot(data = drought_exp_clean, # use the annual_visits data frame
+       aes(x = sla, # the x-axis 
+           y = total_g, # the y-axis 
+           )) + # color all geometries by species name
+  geom_point() + # adding points
+  labs(x = "Specific Leaf Area cm\U00B2(g)", # relabelling the x-axis
+       y = "Total Mass(g)", # and the y-axis
+       title = "As SLA increases, Total Mass Increases", # adding a title
+     ) # relabelling the legend
+
+```
 
 
 
@@ -164,11 +178,42 @@ Label the axes with units where appropriate.
 
 Add a title describing the differences in (mean or median) plant mass between water treatments.
 
+```{r}
+#| label: comparing mass between water treatments
+ggplot(data = drought_exp_clean, # starting data frame
+       aes(x = water_treatment, # x-axis
+           y = total_g, # y-axis
+           color = water_treatment)) + # coloring by watershed
+ 
+  # second layer: jitter plot
+  geom_jitter(height = 0, # making sure points don't move along y-axis
+              width = 0.3) + # narrowing width of jitter 
+  scale_color_manual(values = c(
+    "Drought stressed" = ds_col,
+    "Well watered" = ww_col
+  )) +
+  labs(x = "Water Treatment",
+       y = "Total mass(g)",
+       title = " Well Waterted Plants tend to have a higher mass") +
+  theme(legend.position = "none",
+        plot.title.position = "plot")
+```
 
+_Encelia californica_        | ENCCAL       | Bush sunflower     |  
+| _Eschscholzia californica_   | ESCCAL       | California poppy   | 
+| _Penstemon centranthifolius_ | PENCEN       | Scarlet bugler     | 
+| _Grindelia camporums_        | GRINCAM      | Gumweed            | 
+| _Salvia leucophylla_         | SALLEU       | Purple sage        | 
+| _Stipa pulchra_              | STIPUL       | Purple needlegrass | 
 
-
-
-
+| _Lotus scoparius_
+lotsco_col <- "#E69512"
+pencen_col <- "#D6264F"
+salleu_col <- "#6D397D"
+enccal_col <- "#3A5565"
+stipul_col <- "#3F564F"
+esccal_col <- "#515481"
+gricam_col
 
 ## What are the differences in total mass between species?
 
@@ -180,10 +225,49 @@ Add a title describing the differences in (mean or median) plant mass between sp
 
 Bonus: order the x-axis by decreasing mean plant mass _and_ wrap the long species names using the `label_wrap()` function from the `scales` package.
 
+```{r}
+#| label: plant mass by species
+ggplot(data = drought_exp_clean, # starting data frame
+       aes(x = reorder(species_name, -total_g), # x-axis
+           y = total_g, # y-axis
+           color = species_name)) + # coloring by watershed
+ 
+  # second layer: jitter plot
+  geom_jitter(height = 0, # making sure points don't move along y-axis
+              width = 0.3) + # narrowing width of jitter 
+  scale_color_manual(values = c(
+   "Encelia californica" = enccal_col,
+   "Eschscholzia californica" = enccal_col,
+   "Penstemon centranthifolius" = pencen_col,
+   "Grindelia camporums" = gricam_col,
+   "Salvia leucophylla" = salleu_col,
+   "Stipa pulchra" = stipul_col,
+   "Lotus scoparius" = lotsco_col
+  )) +
+  scale_x_discrete(labels = label_wrap(10)) +
+  labs(x = "Spcies name",
+       y = "Total mass(g)",
+       title = " ") +
+  theme(legend.position = "none",
+        plot.title.position = "plot")
+```
 
+_Encelia californica_        | ENCCAL       | Bush sunflower     |  
+| _Eschscholzia californica_   | ESCCAL       | California poppy   | 
+| _Penstemon centranthifolius_ | PENCEN       | Scarlet bugler     | 
+| _Grindelia camporums_        | GRINCAM      | Gumweed            | 
+| _Salvia leucophylla_         | SALLEU       | Purple sage        | 
+| _Stipa pulchra_              | STIPUL       | Purple needlegrass | 
 
+| _Lotus scoparius_
 
-
+lotsco_col <- "#E69512"
+pencen_col <- "#D6264F"
+salleu_col <- "#6D397D"
+enccal_col <- "#3A5565"
+stipul_col <- "#3F564F"
+esccal_col <- "#515481"
+gricam_col
 
 
 
